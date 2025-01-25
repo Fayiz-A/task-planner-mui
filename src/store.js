@@ -1,4 +1,5 @@
 import { makeAutoObservable } from "mobx";
+import {Howl} from 'howler';
 
 class ScheduleStore {
   startTime = null;
@@ -22,6 +23,7 @@ class ScheduleStore {
 
     // Load slots for the selected date
     const dateKey = this.selectedDate.toISOString().split("T")[0];
+
     const savedData = savedSlots[dateKey] || { slots: [], startTime: null, endTime: null };
 
     // Convert saved slots' start and end times to Date objects
@@ -31,8 +33,9 @@ class ScheduleStore {
       end: new Date(slot.end),
     }));
 
-    this.startTime = savedData.startTime ? new Date(savedData.startTime) : null;
-    this.endTime = savedData.endTime ? new Date(savedData.endTime) : null;
+    this.setStartTime(savedData?.startTime ? new Date(savedData.startTime) : null);
+    this.setEndTime(savedData?.endTime ? new Date(savedData.endTime) : null);
+    
     this.darkMode = savedTheme;
     this.tasks = savedTasks;
   }
@@ -51,14 +54,26 @@ class ScheduleStore {
     localStorage.setItem("tasks", JSON.stringify(this.tasks));
   }
 
+  amendCorrectDateToTime(time) {
+    if(time == null) return null;
+
+    const newDateTime = new Date(this.selectedDate);
+    newDateTime.setHours(time.getHours());
+    newDateTime.setMinutes(time.getMinutes());
+    newDateTime.setSeconds(0);
+    return newDateTime;
+  }
+
   // Set start time
   setStartTime(time) {
-    this.startTime = time;
+    let newDateTime=this.amendCorrectDateToTime(time);
+    this.startTime = newDateTime;
   }
 
   // Set end time
   setEndTime(time) {
-    this.endTime = time;
+    let newDateTime=this.amendCorrectDateToTime(time);
+    this.endTime = newDateTime;
   }
 
   // Set selected date
@@ -88,7 +103,17 @@ class ScheduleStore {
 
       // Schedule notification for the end of the slot
       if (this.notificationsEnabled) {
-        this.scheduleNotification(slotEndTime);
+        let timeNow = new Date();
+        let timeToShowNotification;
+        //if the slot end time matches the time right now exactly except seconds, display the notification
+        if (slotEndTime.getHours() == timeNow.getHours() && slotEndTime.getMinutes() == timeNow.getMinutes()) {
+          console.log(`Playing notification now: ${timeNow}`)
+          timeNow.setSeconds(timeNow.getSeconds()+2)
+          timeToShowNotification = timeNow;
+        } else {
+          timeToShowNotification = slotEndTime;
+        }
+        this.scheduleNotification(timeToShowNotification, currentTime);
       }
 
       currentTime = slotEndTime; // Move to the next slot
@@ -116,12 +141,13 @@ class ScheduleStore {
   }
 
   // Schedule a notification
-  scheduleNotification(notificationTime) {
+  scheduleNotification(notificationTime, slotStartTime) {
+
     if ("Notification" in window && Notification.permission === "granted") {
       const timeUntilNotification = notificationTime.getTime() - Date.now();
+      console.log(`${notificationTime} + timeUntilNotification ${timeUntilNotification}`);
 
       if (timeUntilNotification > 0) {
-        console.log("scheduled");
         this.showNotificationAlert();
 
         setTimeout(() => {
@@ -140,12 +166,32 @@ class ScheduleStore {
         // const customNotification = new Notification(options);
         // customNotification.show();
 
+        const soundFileName = 'Bird Chirp.mp3';
+        
         window.electronAPI.sendNotification({
           options: 'YOU ARE ACCOUNTABLE', 
           subtitle: 'You are accountable for your blessings', 
-          body: `Please justify how you utilized all the blessings, which are a test for you, from ${notificationTime.getTime()} to ${notificationTime.getTime()}`, 
-          soundPath: './Bird Chirp.mov'
+          body: `Please justify how you utilized all the blessings, which are a test for you, from ${this.humanizeTime(slotStartTime)} to ${this.humanizeTime(notificationTime)}`, 
+          soundPath: soundFileName
         });
+          const resolvedPath = `${process.env.PUBLIC_URL}/${soundFileName}`;
+          const sound = new Howl({
+            src: [resolvedPath],
+            autoplay: false,
+            onplayerror: function (id, error) {
+                console.error('Error occured for sound ID:' + id + '\n'+ error);
+            },
+            onloaderror: function (id, error) {
+              console.error('Error occured while loading sound ID:' + id + '\n'+ error);
+          },
+            onend: function () {
+              console.log('Ended playing notification sound.');
+            }
+          });
+      
+          sound.play();
+          // console.log(sound.playing());
+          // console.log(sound.duration());
           // const notification = new Notification("Time's up!", {
           //   body: "Please fill the next slot.",
           //   silent:false,
@@ -169,6 +215,10 @@ class ScheduleStore {
     }
   }
 
+  humanizeTime(dateTimeObject) {
+    let humanizedTime = `${dateTimeObject.getHours()}:${dateTimeObject.getMinutes()}`;
+    return humanizedTime;
+  }
   // Request notification permission
   requestNotificationPermission() {
     if ("Notification" in window) {

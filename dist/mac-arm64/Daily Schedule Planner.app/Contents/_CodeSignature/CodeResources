@@ -4,9 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/app-update.yml</key>
+		<data>
+		w+QvjtURNClKUW8bBeMFztAiJ/E=
+		</data>
 		<key>Resources/app.asar</key>
 		<data>
-		G+JdL0j+jhuKESyPMGDH6jNuokU=
+		4OsNeoqZwu79jQ70IdQymPbzfts=
 		</data>
 		<key>Resources/app.asar.unpacked/node_modules/fsevents/LICENSE</key>
 		<data>
@@ -18,7 +22,7 @@
 		</data>
 		<key>Resources/app.asar.unpacked/node_modules/fsevents/fsevents.node</key>
 		<data>
-		xn3tr33qwQqATKkIlIjlMHxifXU=
+		Gzt4UTRpHdkDITYIXpIklBX3kso=
 		</data>
 		<key>Resources/app.asar.unpacked/node_modules/fsevents/package.json</key>
 		<data>
@@ -71,7 +75,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			ut3vdn0EIuAWimiqz/+c/Py8u3U=
+			umNsPLtChDQXm8JwCj3DuAmRCCM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.github.Electron.framework" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Arif Ali (F4YV3PZ974)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
@@ -98,16 +102,23 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			W7cQWbfj0bysmKUBoY4jMPFNXUQ=
+			E1UWtl8jWxRNJiA0oOsK0hdTgA0=
 			</data>
 			<key>requirement</key>
 			<string>identifier "com.github.Squirrel" and anchor apple generic and certificate leaf[subject.CN] = "Apple Development: Arif Ali (F4YV3PZ974)" and certificate 1[field.1.2.840.113635.100.6.2.1] /* exists */</string>
+		</dict>
+		<key>Resources/app-update.yml</key>
+		<dict>
+			<key>hash2</key>
+			<data>
+			SO5YDDfGbIb8MXnzcTjQbXsT6tVeIGShI+GouWCI35Q=
+			</data>
 		</dict>
 		<key>Resources/app.asar</key>
 		<dict>
 			<key>hash2</key>
 			<data>
-			oQV2yBxmhCTh+Vxu4E6EuYaJXJfcAq9dU/0ZZVXD3l0=
+			5Jb1iSLz1U5qUhQhT8nml+6fLZCRWolAtno+Nzs+HpA=
 			</data>
 		</dict>
 		<key>Resources/app.asar.unpacked/node_modules/fsevents/LICENSE</key>
@@ -128,7 +139,7 @@
 		<dict>
 			<key>hash2</key>
 			<data>
-			3K3FmcVRGf5cEXRh8rFby6Rm4qrUP9lRU+QM2xHu0sw=
+			kF9FaTkBXvVO5Nc1Qi0JtaU0RRWg3Sgoe43CxOAwy48=
 			</data>
 		</dict>
 		<key>Resources/app.asar.unpacked/node_modules/fsevents/package.json</key>

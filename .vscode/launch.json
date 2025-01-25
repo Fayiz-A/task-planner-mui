@@ -7,6 +7,22 @@
         "request": "launch",
         "url": "http://localhost:3000", // Replace with your app's URL
         "webRoot": "${workspaceFolder}/src"
+      },
+      {
+        "name": "Electron: Main",
+        "type": "node",
+        "request": "launch",
+        "program": "${workspaceFolder}/node_modules/electron/dist/electron.js",
+        "args": ["."],
+        "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/electron",
+        "outputCapture": "std"
+      },
+      {
+        "name": "Electron: Renderer",
+        "type": "chrome",
+        "request": "attach",
+        "port": 9222,
+        "webRoot": "${workspaceFolder}"
       }
     ]
-  }
+}

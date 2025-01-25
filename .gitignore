@@ -22,6 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-dist/Daily Schedule Planner-0.1.0-arm64.dmg
-dist/mac-arm64/Daily Schedule Planner.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework
-dist/mac-arm64/Daily Schedule Planner.app/Contents/Resources/app.asar
+/dist/Daily Schedule Planner-0.1.0-arm64.dmg
+/dist/mac-arm64/Daily Schedule Planner.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework
+/dist/mac-arm64/Daily Schedule Planner.app/Contents/Resources/app.asar
+/dist/mac-arm64/Daily Schedule Planner.app/Contents/Frameworks/Electron Framework.framework/Versions/A/Electron Framework

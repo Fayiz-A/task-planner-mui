@@ -1,7 +1,7 @@
-const { app, BrowserWindow,ipcMain, Notification } = require("electron");
+const { app, BrowserWindow,ipcMain, Notification, dialog } = require("electron");
 const path = require("path");
 const fs = require('fs');
-const player = require('play-sound')(); // Import the play-sound library
+// const { Howl } = require('howler');  // Using CommonJS syntax
 
 let mainWindow;
 
@@ -66,13 +66,4 @@ ipcMain.on('notify', (event, { title, subtitle, body, soundPath }) => {
 
   const customNotification = new Notification(options);
   customNotification.show();
-
-  if (soundPath) {
-    const resolvedPath = path.resolve(__dirname, soundPath);
-    player.play(resolvedPath, (err) => {
-      if (err) {
-        console.error('Error playing sound:', err);
-      }
-    });
-  }
 });

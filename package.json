@@ -6,10 +6,13 @@
   "homepage": ".",
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && electron-builder",
+    "start:debug": "electron --inspect=9229 .",
+    "electron-dev": "cross-env NODE_ENV=development electron .",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "electron": "electron .",
+    "start:reload": "electron . --require electron-reloader",
     "electron-start": "concurrently \"npm start\" \"wait-on http://localhost:3000 && electron .\"",
     "electron-pack": "electron-builder -m"
   },
@@ -21,6 +24,7 @@
     "@mui/x-date-pickers": "^6.0.0",
     "cra-template": "1.2.0",
     "date-fns": "^2.30.0",
+    "howler": "^2.2.4",
     "mobx": "^6.13.5",
     "mobx-react-lite": "^4.1.0",
     "path": "^0.12.7",
@@ -52,8 +56,10 @@
   },
   "devDependencies": {
     "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
     "electron": "^34.0.0",
     "electron-builder": "^25.1.8",
+    "electron-packager": "^17.1.2",
     "wait-on": "^7.0.0"
   },
   "build": {
